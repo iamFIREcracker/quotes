@@ -22,6 +22,16 @@ class App extends Component {
           goal: '>=3/7',
           goalDescription: 'three or more times a week'
         },
+        {
+          name: 'eat bread at lunch',
+          goal: '<=0/7',
+          goalDescription: 'never'
+        },
+        {
+          name: 'dinner out',
+          goal: '<=1/7',
+          goalDescription: 'once a week'
+        },
       ],
       entries: [
         {
@@ -32,7 +42,8 @@ class App extends Component {
         {
           _date: '3 Jan',
           'read at least 30m': true,
-          'exercise': true
+          'exercise': true,
+          'eat bread at lunch': true
         },
         {
           _date: '5 Jan',
@@ -57,7 +68,17 @@ class App extends Component {
         },
         {
           _date: '12 Jan',
-          'read at least 30m': true
+          'read at least 30m': true,
+          'dinner out': true
+        },
+        {
+          _date: '13 Jan',
+          'read at least 30m': true,
+          'dinner out': true
+        },
+        {
+          _date: '15 Jan',
+          'eat bread at lunch': true,
         },
       ],
     }
@@ -95,7 +116,7 @@ class App extends Component {
     window.gapi.client.sheets.spreadsheets.values.get({
       key: 'KEY',
       spreadsheetId: '1akhbqFlElr0iKnKmK0ZTQeNTBgvNgZVghEpDR9_MDvY',
-      range: 'Legend!A2:E'
+      range: 'Legend!A2:C'
     }).then(
       (response) => {
         const data = response.result.values || [];
@@ -115,7 +136,7 @@ class App extends Component {
     window.gapi.client.sheets.spreadsheets.values.get({
       key: 'KEY',
       spreadsheetId: '1akhbqFlElr0iKnKmK0ZTQeNTBgvNgZVghEpDR9_MDvY',
-      range: 'Entries!A2:E'
+      range: `Entries!A2:${'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[legend.length + 1]}`
     }).then(
       (response) => {
         const data = response.result.values || [];
