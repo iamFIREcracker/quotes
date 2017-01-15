@@ -17,15 +17,26 @@ class App extends Component {
           goal: '>=5/7',
           goalDescription: 'at least 5 times in the last 7 days'
         },
+        {
+          name: 'exercise',
+          goal: '>=3/7',
+          goalDescription: 'three or more times a week'
+        },
       ],
       entries: [
         {
           _date: '1 Jan',
-          'read at least 30m': true
+          'read at least 30m': true,
+          'exercise': true
         },
         {
           _date: '3 Jan',
-          'read at least 30m': true
+          'read at least 30m': true,
+          'exercise': true
+        },
+        {
+          _date: '5 Jan',
+          'exercise': true
         },
         {
           _date: '6 Jan',
@@ -33,7 +44,8 @@ class App extends Component {
         },
         {
           _date: '7 Jan',
-          'read at least 30m': true
+          'read at least 30m': true,
+          'exercise': true
         },
         {
           _date: '9 Jan',
@@ -141,14 +153,18 @@ class App extends Component {
       );
     }
     if (this.state.legend.length && this.state.entries.length) {
-      return (
+      const calendars = this.state.legend.map(legend => (
         <Calendar
-          title={ this.state.legend[0].name }
-          goal={ this.state.legend[0].goal }
-          goalDescription={ this.state.legend[0].goalDescription }
+          key={ legend.name }
+          title={ legend.name }
+          goal={ legend.goal }
+          goalDescription={ legend.goalDescription }
           entries={ this.state.entries }
         >
         </Calendar>
+      ));
+      return (
+        <div>{ calendars }</div>
       );
     }
     return (
