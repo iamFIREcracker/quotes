@@ -29,7 +29,7 @@
 }
 
 .Calendar table td.today {
-  background-color: #89ff89;
+  background-color: #70c8fb;
 }
 
 .Calendar table td span {
@@ -46,28 +46,29 @@
 .Calendar table td span.goal-100 {
   width: 14px;
   height: 14px;
-  background-color: #777777;
+  background-color: #89ff89;
 }
 
 .Calendar table td span.goal-75 {
   width: 12px;
   height: 12px;
-  background-color: #999999;
+  background-color: #777777;
 }
 
 .Calendar table td span.goal-50 {
   width: 10px;
   height: 10px;
-  background-color: #bababa;
+  background-color: #999999;
 }
 
 .Calendar table td span.goal-25 {
   width: 8px;
   height: 8px;
-  background-color: #dedede;
+  background-color: #bababa;
 }
 
 .Calendar table td span.goal-0 {
   width: 6px;
   height: 6px;
+  background-color: #dedede;
 }

@@ -40,6 +40,10 @@ class App extends Component {
           'read at least 30m': true
         },
         {
+          _date: '10 Jan',
+          'read at least 30m': true
+        },
+        {
           _date: '12 Jan',
           'read at least 30m': true
         },
