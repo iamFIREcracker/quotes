@@ -27,7 +27,17 @@ body {
   font-family: 'Bungee Shade';
   font-size: 44px;
 
-  margin: 0 0 50px;
+  margin: 0 0 30px;
+}
+
+.description {
+  max-width: 50em;
+  margin: 0 auto 10px;
+
+  font-family: 'Libre Baskerville', serif;
+  font-size: 14px;
+  color: rgba(155,155,155,.8);
+  font-style: italic;
 }
 
 @media (min-width: 37.5em) {

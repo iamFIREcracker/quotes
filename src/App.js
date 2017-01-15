@@ -159,9 +159,36 @@ class App extends Component {
   }
 
   render() {
+    const spreadsheetUrl = `https://docs.google.com/spreadsheets/d/${this.props.spreadsheetId }`;
+    const locationHashUrl = `/#${this.props.spreadsheetId}`;
     return (
       <div className="app">
         <h1 className="brand">“Resolutions”</h1>
+        <p className="description">
+          * This page renders data taken from
+          &nbsp;
+          <a
+            target='_blank'
+            href={ spreadsheetUrl }
+          >
+            this
+          </a>
+          &nbsp;
+          Google sheet
+        </p>
+        <p className="description">
+          ** You can change the sourced sheet by setting the Location hash property to its ID
+          <br />
+          (e.g.
+          &nbsp;
+          <a
+            href={ locationHashUrl }
+          >
+            { locationHashUrl }
+          </a>
+          &nbsp;
+          )
+        </p>
         { this.renderContent() }
       </div>
     );
