@@ -1,11 +1,8 @@
 import React from 'react';
 
+import './Alert.css';
+
 export default class Alert extends React.Component {
-
-  static propTypes = {
-    error: React.PropTypes.object.isRequired
-  };
-
   render() {
     let message, icon;
 
@@ -31,4 +28,7 @@ export default class Alert extends React.Component {
     );
   }
 
+  static propTypes = {
+    error: React.PropTypes.object.isRequired
+  };
 }

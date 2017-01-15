@@ -1,0 +1,10 @@
+.alert {
+  color: #D65F5F;
+}
+.alert__icon {
+  display: block;
+  margin: 0 auto 20px;
+
+  font-size: 100px;
+  line-height: 1;
+}

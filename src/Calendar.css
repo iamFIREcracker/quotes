@@ -1,0 +1,73 @@
+.Calendar h2.title {
+  margin: 3em 0 1em;
+
+  font-family: 'Roboto Slab';
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 6px;
+  font-weight: normal;
+}
+
+.Calendar h3.description {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 14px;
+  color: rgba(155,155,155,.8);
+  font-style: italic;
+}
+
+.Calendar table {
+  margin: auto;
+  table-layout: fixed;
+  border-spacing: 4px;
+}
+
+.Calendar table td {
+  padding: 0;
+  line-height: 0;
+  width: 14px;
+  height: 14px;
+}
+
+.Calendar table td.today {
+  background-color: #89ff89;
+}
+
+.Calendar table td span {
+  width: 4px;
+  height: 4px;
+  display: inline-block;
+  background-color: #efefef;
+}
+
+.Calendar table td, .Calendar table span {
+  border-radius: 7px;
+}
+
+.Calendar table td span.goal-100 {
+  width: 14px;
+  height: 14px;
+  background-color: #777777;
+}
+
+.Calendar table td span.goal-75 {
+  width: 12px;
+  height: 12px;
+  background-color: #999999;
+}
+
+.Calendar table td span.goal-50 {
+  width: 10px;
+  height: 10px;
+  background-color: #bababa;
+}
+
+.Calendar table td span.goal-25 {
+  width: 8px;
+  height: 8px;
+  background-color: #dedede;
+}
+
+.Calendar table td span.goal-0 {
+  width: 6px;
+  height: 6px;
+}
