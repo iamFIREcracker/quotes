@@ -95,21 +95,18 @@ export default class Calendar extends React.Component {
     } else {
       goal = (den - num)/den;
     }
-    console.log({ leOrGe, num, den, goal });
 
     return mostRecent => {
       let last = _.takeRight(mostRecent, den);
       if (last.length < den) {
         last = last.concat(_.times(den - last.length, _.constant(leOrGe !== '>=')));
       }
-      console.log(last);
       let score;
       if (leOrGe === '>=') {
         score = _.sum(last) / den;
       } else {
         score = (den - _.sum(last)) / den;
       }
-      console.log({ last, score });
       return Math.min(100, parseInt(score * 100 / goal, 10));
     };
   }

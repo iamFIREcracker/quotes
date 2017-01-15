@@ -11,80 +11,12 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      legend: [
-        {
-          name: 'read at least 30m',
-          goal: '>=5/7',
-          goalDescription: 'at least 5 times in the last 7 days'
-        },
-        {
-          name: 'exercise',
-          goal: '>=3/7',
-          goalDescription: 'three or more times a week'
-        },
-        {
-          name: 'eat bread at lunch',
-          goal: '<=0/7',
-          goalDescription: 'never'
-        },
-        {
-          name: 'dinner out',
-          goal: '<=1/7',
-          goalDescription: 'once a week'
-        },
-      ],
-      entries: [
-        {
-          _date: '1 Jan',
-          'read at least 30m': true,
-          'exercise': true
-        },
-        {
-          _date: '3 Jan',
-          'read at least 30m': true,
-          'exercise': true,
-          'eat bread at lunch': true
-        },
-        {
-          _date: '5 Jan',
-          'exercise': true
-        },
-        {
-          _date: '6 Jan',
-          'read at least 30m': true
-        },
-        {
-          _date: '7 Jan',
-          'read at least 30m': true,
-          'exercise': true
-        },
-        {
-          _date: '9 Jan',
-          'read at least 30m': true
-        },
-        {
-          _date: '10 Jan',
-          'read at least 30m': true
-        },
-        {
-          _date: '12 Jan',
-          'read at least 30m': true,
-          'dinner out': true
-        },
-        {
-          _date: '13 Jan',
-          'read at least 30m': true,
-          'dinner out': true
-        },
-        {
-          _date: '15 Jan',
-          'eat bread at lunch': true,
-        },
-      ],
+      legend: [],
+      entries: []
     }
   }
 
-  _componentDidMount() {
+  componentDidMount() {
     window.gapi.load('client', () => {
       window.gapi.client.load('sheets', 'v4', () => {
         this.loadLegend((legend, error) => {
@@ -99,7 +31,6 @@ class App extends Component {
                   error
                 });
               } else {
-                console.log({ legend, entries });
                 this.setState({
                   legend,
                   entries
