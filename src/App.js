@@ -115,7 +115,7 @@ class App extends Component {
   loadLegend(callback) {
     window.gapi.client.sheets.spreadsheets.values.get({
       key: 'KEY',
-      spreadsheetId: '1akhbqFlElr0iKnKmK0ZTQeNTBgvNgZVghEpDR9_MDvY',
+      spreadsheetId: this.props.spreadsheetId,
       range: 'Legend!A2:C'
     }).then(
       (response) => {
@@ -135,7 +135,7 @@ class App extends Component {
   loadEntries(legend, callback) {
     window.gapi.client.sheets.spreadsheets.values.get({
       key: 'KEY',
-      spreadsheetId: '1akhbqFlElr0iKnKmK0ZTQeNTBgvNgZVghEpDR9_MDvY',
+      spreadsheetId: this.props.spreadsheetId,
       range: `Entries!A2:${'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[legend.length + 1]}`
     }).then(
       (response) => {
