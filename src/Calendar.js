@@ -55,11 +55,9 @@ export default class Calendar extends React.Component {
         return (
           <td
             key={ dayLabel }
+            title={ dayLabel }
           >
-            <span
-              title={ dayLabel }
-            >
-            </span>
+            <span />
           </td>
         );
       }
@@ -72,11 +70,11 @@ export default class Calendar extends React.Component {
       return (
         <td
           key={ dayLabel }
+          title={ label }
           className={ this.getContainerClassName(dayLabel) }
         >
           <span
             className={ this.getClassName(_.last(mostRecent), score) }
-            title={ label }
           >
           </span>
         </td>
