@@ -2,14 +2,15 @@
   "name": "resolutions",
   "version": "0.0.1",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/iamFIREcracker/resolutions.git"
+    "type": "git",
+    "url": "https://github.com/iamFIREcracker/resolutions.git"
   },
   "homepage": "https://iamFIREcracker.github.io/resolutions",
   "license": "MIT",
   "author": "Matteo Landi",
   "private": true,
   "devDependencies": {
+    "gh-pages": "^0.12.0",
     "react-scripts": "0.8.5"
   },
   "dependencies": {
@@ -23,7 +24,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "deploy": "./deploy.sh"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
