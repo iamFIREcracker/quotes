@@ -82,7 +82,7 @@ class App extends Component {
 
   render() {
     const spreadsheetUrl = `https://docs.google.com/spreadsheets/d/${this.props.spreadsheetId }`;
-    const locationHashUrl = `/#${this.props.spreadsheetId}`;
+    const locationHashUrl = `./#${this.props.spreadsheetId}`;
     return (
       <div className="app">
         <h1 className="brand">“Resolutions”</h1>
