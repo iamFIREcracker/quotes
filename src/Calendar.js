@@ -40,7 +40,7 @@ export default class Calendar extends React.Component {
 
   getDays() {
     const entriesByDate = _.keyBy(this.props.entries, '_date');
-    const mostRecent = [];
+    const mostRecent = _.times(7, _.constant(false));
     const scoreFn = this.getScoreFn();
     return _.range(this.endOfYear.diff(this.firstMonday, 'days') + 1).map((i) => {
       const day = this.firstMonday.clone().add(i, 'days');
@@ -63,9 +63,7 @@ export default class Calendar extends React.Component {
       }
 
       mostRecent.push(!!(entriesByDate[dayLabel] && entriesByDate[dayLabel][this.props.title]));
-      if (mostRecent.legnth > 7) {
-        mostRecent.shift();
-      }
+      mostRecent.shift();
       const score = scoreFn(mostRecent);
       const label = `${dayLabel} — ${score}%`;
 
@@ -85,28 +83,15 @@ export default class Calendar extends React.Component {
   }
 
   getScoreFn() {
-    const groups = /(<=|>=)([0-9]+)\/([0-9]+)/.exec(this.props.goal);
-    const leOrGe = groups[1];
-    const num = parseInt(groups[2], 10);
-    const den = parseInt(groups[3], 10);
-    let goal;
-    if (leOrGe === '>=') {
-      goal = num/den;
-    } else {
-      goal = (den - num)/den;
-    }
+    const groups = /([0-9]+)\/([0-9]+)/.exec(this.props.goal);
+    const num = parseInt(groups[1], 10);
+    const den = parseInt(groups[2], 10);
+    const goal = num/den;
 
     return mostRecent => {
-      let last = _.takeRight(mostRecent, den);
-      if (last.length < den) {
-        last = last.concat(_.times(den - last.length, _.constant(leOrGe !== '>=')));
-      }
-      let score;
-      if (leOrGe === '>=') {
-        score = _.sum(last) / den;
-      } else {
-        score = (den - _.sum(last)) / den;
-      }
+      const last = _.takeRight(mostRecent, den);
+      const score = _.sum(last) / den;
+      console.log({ name: this.props.title, score, goal });
       return Math.min(100, parseInt(score * 100 / goal, 10));
     };
   }
@@ -118,7 +103,7 @@ export default class Calendar extends React.Component {
   getClassName(done, score) {
     let classes = '';
     if (done) {
-      classes = `${classes} done`;
+      classes = `${classes} doit`;
     }
     if (score < 25) {
       classes = `${classes} goal-0`;

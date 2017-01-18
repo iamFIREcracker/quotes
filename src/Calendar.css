@@ -49,8 +49,8 @@
   background-color: #efefef;
 }
 
-.Calendar table td span.done {
-  border: 2px solid #f08c26;
+.Calendar table td span.doit {
+  border: 2px solid #63d963;
 }
 
 .Calendar table td span.goal-100 {
