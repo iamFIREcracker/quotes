@@ -135,28 +135,28 @@ export default class Calendar extends React.Component {
   }
 
   getContainerClassName(prevScore, score, nextScore) {
-    let classes = '';
+    const classes = [];
     if (score >= 100) {
-      classes = 'goal-100';
+      classes.push('goal-100');
       if (prevScore < 100) {
-        classes = `${classes} first`;
+        classes.push('first');
       }
       if (nextScore < 100) {
-        classes = `${classes} last`;
+        classes.push('last');
       }
     }
-    return classes;
+    return classes.join(' ');
   }
 
   getClassName(done, dayLabel) {
-    let classes = '';
+    const classes = [];
     if (done) {
-      classes = 'yeah';
+      classes.push('yeah');
     }
     if (this.todayLabel === dayLabel) {
-      classes = `${classes} today`;
+      classes.push('today');
     }
-    return classes;
+    return classes.join(' ');
   }
 
   static propTypes = {
