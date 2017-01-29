@@ -69,7 +69,7 @@ export default class Calendar extends React.Component {
           ) }
         >
           <span
-            className={ this.getClassName(done) }
+            className={ this.getClassName(done, dayLabel) }
           >
           </span>
         </td>
@@ -148,10 +148,13 @@ export default class Calendar extends React.Component {
     return classes;
   }
 
-  getClassName(done) {
+  getClassName(done, dayLabel) {
     let classes = '';
     if (done) {
       classes = 'yeah';
+    }
+    if (this.todayLabel === dayLabel) {
+      classes = `${classes} today`;
     }
     return classes;
   }

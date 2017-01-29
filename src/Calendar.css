@@ -53,10 +53,6 @@
   border-bottom-right-radius: 8px;
 }
 
-.Calendar table td.goal-100 span {
-  background-color: #eaeaea;
-}
-
 .Calendar table td span {
   width: 4px;
   height: 4px;
@@ -64,8 +60,20 @@
   background-color: #efefef;
 }
 
+.Calendar table td.goal-100 span {
+  background-color: #cccccc;
+}
+
 .Calendar table td span.yeah {
   width: 6px;
   height: 6px;
   background-color: #555555;
+}
+
+.Calendar table td span.today {
+  background-color: #70c8fb;
+}
+
+.Calendar table td.goal-100 span.today {
+  background-color: #83dbff;
 }
