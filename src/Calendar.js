@@ -94,7 +94,7 @@ export default class Calendar extends React.Component {
     return _.range(DAYS + 1).map((i) => {
       const day = this.firstMonday.clone().add(i, 'days');
       const dayLabel = day.format('D MMM');
-      if (day.year() !== this.endOfYear.year()) {
+      if (day.year() !== this.today.year()) {
         return { dayLabel, differentYear: true };
       }
 
