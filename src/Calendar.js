@@ -11,10 +11,10 @@ const DAYS = DAYS_PER_ROW * Math.ceil(365 / DAYS_PER_ROW);
 export default class Calendar extends React.Component {
   constructor(props) {
     super(props);
-    this.today = moment.utc().startOf('day');
+    this.today = moment().startOf('day');
     this.todayLabel = this.today.format('D MMM');
-    this.firstMonday = moment.utc().startOf('year').startOf('isoweek');
-    this.endOfYear = moment.utc().endOf('year');
+    this.firstMonday = moment().startOf('year').startOf('isoweek');
+    this.endOfYear = moment.endOf('year');
   }
 
   render() {
