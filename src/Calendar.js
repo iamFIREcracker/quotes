@@ -4,6 +4,9 @@ import moment from 'moment';
 
 import './Calendar.css';
 
+const DAYS_PER_ROW = 21;
+const DAYS = DAYS_PER_ROW * Math.ceil(365 / DAYS_PER_ROW);
+
 export default class Calendar extends React.Component {
   constructor(props) {
     super(props);
@@ -24,7 +27,7 @@ export default class Calendar extends React.Component {
   }
 
   renderContent() {
-    const rows = _.chunk(this.getDays(), 21).map((data, i) => {
+    const rows = _.chunk(this.getDays(), DAYS_PER_ROW).map((data, i) => {
       return (
         <tr key={ i }>{ data }</tr>
       );
@@ -39,8 +42,8 @@ export default class Calendar extends React.Component {
   }
   getDays() {
     const data = this.getDaysData();
-    return data.map(({ dayLabel, previousYear, afterToday, score, done }, i) => {
-      if (previousYear) {
+    return data.map(({ dayLabel, differentYear, afterToday, score, done }, i) => {
+      if (differentYear) {
         return (
           <td key={ dayLabel } />
         );
@@ -81,11 +84,11 @@ export default class Calendar extends React.Component {
   getDaysData() {
     const entriesByDate = _.keyBy(this.props.entries, '_date');
     const mostRecent = _.times(7, _.constant(false));
-    return _.range(this.endOfYear.diff(this.firstMonday, 'days') + 1).map((i) => {
+    return _.range(DAYS + 1).map((i) => {
       const day = this.firstMonday.clone().add(i, 'days');
       const dayLabel = day.format('D MMM');
       if (day.year() !== this.endOfYear.year()) {
-        return { dayLabel, previousYear: true };
+        return { dayLabel, differentYear: true };
       }
 
       if (day.isAfter(this.today)) {
