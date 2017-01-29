@@ -37,21 +37,15 @@ export default class Calendar extends React.Component {
       </table>
     );
   }
-
   getDays() {
-    const entriesByDate = _.keyBy(this.props.entries, '_date');
-    const mostRecent = _.times(7, _.constant(false));
-    const scoreFn = this.getScoreFn();
-    return _.range(this.endOfYear.diff(this.firstMonday, 'days') + 1).map((i) => {
-      const day = this.firstMonday.clone().add(i, 'days');
-      const dayLabel = day.format('D MMM');
-      if (day.year() !== this.endOfYear.year()) {
+    const data = this.getDaysData();
+    return data.map(({ dayLabel, previousYear, afterToday, score, done }, i) => {
+      if (previousYear) {
         return (
           <td key={ dayLabel } />
         );
       }
-
-      if (day.isAfter(this.today)) {
+      if (afterToday) {
         return (
           <td
             key={ dayLabel }
@@ -62,66 +56,109 @@ export default class Calendar extends React.Component {
         );
       }
 
-      mostRecent.push(!!(entriesByDate[dayLabel] && entriesByDate[dayLabel][this.props.title]));
-      mostRecent.shift();
-      const score = scoreFn(mostRecent);
-      const label = `${dayLabel} — ${score}%`;
-
+      const prevScore = data[i - 1] && data[i - 1].score;
+      const nextScore = data[i + 1] && data[i + 1].score;
       return (
         <td
           key={ dayLabel }
-          title={ label }
-          className={ this.getContainerClassName(dayLabel) }
+          title={ this.getContainerLabel(dayLabel, score) }
+          className={ this.getContainerClassName(
+            prevScore || 0,
+            score,
+            nextScore || 0
+          ) }
         >
           <span
-            className={ this.getClassName(_.last(mostRecent), score) }
+            className={ this.getClassName(done) }
           >
           </span>
         </td>
       );
+
     });
   }
 
-  getScoreFn() {
-    const groups = /([0-9]+)\/([0-9]+)/.exec(this.props.goal);
-    const num = parseInt(groups[1], 10);
-    const den = parseInt(groups[2], 10);
+  getDaysData() {
+    const entriesByDate = _.keyBy(this.props.entries, '_date');
+    const mostRecent = _.times(7, _.constant(false));
+    return _.range(this.endOfYear.diff(this.firstMonday, 'days') + 1).map((i) => {
+      const day = this.firstMonday.clone().add(i, 'days');
+      const dayLabel = day.format('D MMM');
+      if (day.year() !== this.endOfYear.year()) {
+        return { dayLabel, previousYear: true };
+      }
+
+      if (day.isAfter(this.today)) {
+        return { dayLabel, afterToday: true };
+      }
+
+      mostRecent.push(!!(entriesByDate[dayLabel] && entriesByDate[dayLabel][this.props.title]));
+      mostRecent.shift();
+      const score = this.getScore(mostRecent);
+      const done = _.last(mostRecent);
+
+      return { dayLabel, score, done };
+    });
+  }
+
+  getScore(mostRecent) {
+    const { num, den } = this.props.goal;
     const goal = num/den;
 
-    return mostRecent => {
-      const last = _.takeRight(mostRecent, den);
-      const score = _.sum(last) / den;
-      console.log({ name: this.props.title, score, goal });
-      return Math.min(100, parseInt(score * 100 / goal, 10));
-    };
+    const last = _.takeRight(mostRecent, den);
+    const score = _.sum(last) / den;
+    return score * 100 / goal;
   }
 
-  getContainerClassName(label) {
-    return this.todayLabel === label ? 'today' : undefined;
+  getContainerLabel(dayLabel, score) {
+    let label = dayLabel;
+    if (this.todayLabel === dayLabel) {
+      label = 'Today';
+    }
+    const goal = this.props.goal.num / this.props.goal.den;
+    const done = parseFloat((score * goal / 100 * this.props.goal.den).toFixed(1));
+    const period = this.props.goal.den;
+    switch (done) {
+      case 0:
+        break;
+      case 1:
+        label = `${label} — 1 time in the last ${period} days`;
+        break;
+      default:
+        label = `${label} — ${done} times in the last ${period} days`;
+        break;
+    }
+    if (score >= 100) {
+      label = `${label} — you did it!`;
+    }
+    return label;
   }
 
-  getClassName(done, score) {
+  getContainerClassName(prevScore, score, nextScore) {
+    let classes = '';
+    if (score >= 100) {
+      classes = 'goal-100';
+      if (prevScore < 100) {
+        classes = `${classes} first`;
+      }
+      if (nextScore < 100) {
+        classes = `${classes} last`;
+      }
+    }
+    return classes;
+  }
+
+  getClassName(done) {
     let classes = '';
     if (done) {
-      classes = `${classes} doit`;
-    }
-    if (score < 25) {
-      classes = `${classes} goal-0`;
-    } else if (score < 50) {
-      classes = `${classes} goal-25`;
-    } else if (score < 75) {
-      classes = `${classes} goal-50`;
-    } else if (score < 100) {
-      classes = `${classes} goal-75`;
-    } else {
-      classes = `${classes} goal-100`;
+      classes = 'yeah';
     }
     return classes;
   }
 
   static propTypes = {
     title: React.PropTypes.string.isRequired,
-    goal: React.PropTypes.string.isRequired,
+    goal: React.PropTypes.object.isRequired,
     goalDescription: React.PropTypes.string.isRequired,
     entries: React.PropTypes.array.isRequired,
   };

@@ -2,10 +2,11 @@
   /* display: inline-block; */
   /* margin-left: .5em; */
   /* margin-right: .5em; */
+  /* width: 450px; */
 }
 
 .Calendar h2.title {
-  margin: 3em 0 1em;
+  margin: 3em 0 .5em;
 
   font-family: 'Roboto Slab';
   font-size: 16px;
@@ -17,29 +18,43 @@
 .Calendar h3.description {
   font-family: 'Libre Baskerville', serif;
   font-size: 16px;
-  color: rgba(155,155,155,.8);
+  color: #afafaf;
   font-style: italic;
 }
 
 .Calendar table {
   margin: auto;
   table-layout: fixed;
-  border-spacing: 4px;
+  border-spacing: 0px;
 }
 
 .Calendar table td {
   padding: 0;
   line-height: 0;
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
 }
 
-.Calendar table td, .Calendar table span {
-  border-radius: 10px;
+.Calendar table td span {
+  border-radius: 8px;
 }
 
-.Calendar table td.today {
-  background-color: #70c8fb;
+.Calendar table td.goal-100 {
+  background-color: #afafaf;
+}
+
+.Calendar table td.goal-100.first {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.Calendar table td.goal-100.last {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.Calendar table td.goal-100 span {
+  background-color: #eaeaea;
 }
 
 .Calendar table td span {
@@ -49,36 +64,8 @@
   background-color: #efefef;
 }
 
-.Calendar table td span.doit {
-  border: 2px solid #63d963;
-}
-
-.Calendar table td span.goal-100 {
-  width: 12px;
-  height: 12px;
-  background-color: #89ff89;
-}
-
-.Calendar table td span.goal-75 {
-  width: 12px;
-  height: 12px;
-  background-color: #777777;
-}
-
-.Calendar table td span.goal-50 {
-  width: 10px;
-  height: 10px;
-  background-color: #999999;
-}
-
-.Calendar table td span.goal-25 {
-  width: 8px;
-  height: 8px;
-  background-color: #bababa;
-}
-
-.Calendar table td span.goal-0 {
+.Calendar table td span.yeah {
   width: 6px;
   height: 6px;
-  background-color: #dedede;
+  background-color: #555555;
 }
