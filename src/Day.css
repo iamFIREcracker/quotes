@@ -1,0 +1,58 @@
+.Day {
+  margin: auto;
+  line-height: 0;
+  table-layout: fixed;
+  border-spacing: 0px;
+}
+
+.Day div {
+  padding: 0;
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+}
+
+.Day div span {
+  border-radius: .5em;
+}
+
+.Day div.goal-100 {
+  background-color: #afafaf;
+}
+
+.Day div.goal-100.first {
+  border-top-left-radius: .5em;
+  border-bottom-left-radius: .5em;
+}
+
+.Day div.goal-100.last {
+  border-top-right-radius: .5em;
+  border-bottom-right-radius: .5em;
+}
+
+.Day div span {
+  margin: .375em;
+  width: .25em;
+  height: .25em;
+  display: inline-block;
+  background-color: #efefef;
+}
+
+.Day div.goal-100 span {
+  background-color: #cccccc;
+}
+
+.Day div span.yeah {
+  margin: .3125em;
+  width: .375em;
+  height: .375em;
+  background-color: #555555;
+}
+
+.Day div span.today {
+  background-color: #70c8fb;
+}
+
+.Day div.goal-100 span.today {
+  background-color: #83dbff;
+}

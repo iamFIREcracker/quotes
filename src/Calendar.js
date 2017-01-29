@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import moment from 'moment';
+import Day from './Day';
 
 import './Calendar.css';
 
@@ -52,29 +53,36 @@ export default class Calendar extends React.Component {
         return (
           <td
             key={ dayLabel }
-            title={ dayLabel }
           >
-            <span />
+            <Day
+              label={ dayLabel }
+            />
           </td>
         );
       }
 
-      const prevScore = data[i - 1] && data[i - 1].score;
-      const nextScore = data[i + 1] && data[i + 1].score;
+      const prevScore = (data[i - 1] && data[i - 1].score) || 0;
+      const nextScore = (data[i + 1] && data[i + 1].score) || 0;
+
+      const label = this.getContainerLabel(dayLabel, score);
+      const isToday = this.todayLabel === dayLabel;
+      const scored = done;
+      const success = score >= 100;
+      const firstInARow = success && prevScore < 100;
+      const lastInARow = success && nextScore < 100;
       return (
         <td
           key={ dayLabel }
-          title={ this.getContainerLabel(dayLabel, score) }
-          className={ this.getContainerClassName(
-            prevScore || 0,
-            score,
-            nextScore || 0
-          ) }
         >
-          <span
-            className={ this.getClassName(done, dayLabel) }
+          <Day
+            label={ label }
+            isToday={ isToday }
+            scored={ scored }
+            success={ score >= 100 }
+            firstInARow={ firstInARow }
+            lastInARow={ lastInARow }
           >
-          </span>
+          </Day>
         </td>
       );
 
@@ -135,31 +143,6 @@ export default class Calendar extends React.Component {
       label = `${label} — you did it!`;
     }
     return label;
-  }
-
-  getContainerClassName(prevScore, score, nextScore) {
-    const classes = [];
-    if (score >= 100) {
-      classes.push('goal-100');
-      if (prevScore < 100) {
-        classes.push('first');
-      }
-      if (nextScore < 100) {
-        classes.push('last');
-      }
-    }
-    return classes.join(' ');
-  }
-
-  getClassName(done, dayLabel) {
-    const classes = [];
-    if (done) {
-      classes.push('yeah');
-    }
-    if (this.todayLabel === dayLabel) {
-      classes.push('today');
-    }
-    return classes.join(' ');
   }
 
   static propTypes = {
