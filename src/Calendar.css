@@ -1,8 +1,8 @@
 .Calendar {
-  /* display: inline-block; */
-  /* margin-left: .5em; */
-  /* margin-right: .5em; */
-  /* width: 450px; */
+  display: inline-block;
+  margin-left: .5em;
+  margin-right: .5em;
+  width: 22em;
 }
 
 .Calendar h2.title {
