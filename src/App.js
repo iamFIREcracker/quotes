@@ -19,19 +19,31 @@ class App extends Component {
 
   componentDidMount() {
     window.gapi.load('client', () => {
-      window.gapi.client.load('sheets', 'v4', () => {
-        this.loadData((data, error) => {
-          if (error) {
-            this.setState({
-              error
-            });
-          } else {
-            this.setState({
-              legend: data.legend,
-              entries: data.entries
-            });
-          }
-        });
+      this.fetchData();
+      this.timerID = setInterval(
+        () => this.fetchData,
+        this.props.refreshInterval
+      );
+    });
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+
+  fetchData() {
+    window.gapi.client.load('sheets', 'v4', () => {
+      this.loadData((data, error) => {
+        if (error) {
+          this.setState({
+            error
+          });
+        } else {
+          this.setState({
+            legend: data.legend,
+            entries: data.entries
+          });
+        }
       });
     });
   }
@@ -146,6 +158,11 @@ class App extends Component {
       <Loader />
     );
   }
+
+  static propTypes = {
+    refreshInterval: React.PropTypes.number.isRequired,
+    spreadsheetId: React.PropTypes.string.isRequired,
+  };
 }
 
 export default App;
