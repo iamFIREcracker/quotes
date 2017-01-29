@@ -73,10 +73,10 @@ class App extends Component {
             });
           } else if (!goalsDescription) {
             goalsDescription = row.filter(v => v);
-            legend = _.zipWith(goalsName, goalsFormula, goalsDescription, (name, goal, goalDescription) => ({
+            legend = _.zipWith(goalsName, goalsFormula, goalsDescription, (name, goal, frequency) => ({
               name, 
               goal,
-              goalDescription
+              frequency
             }));
           } else {
             const date = moment.utc(row[0], 'M/D/YYYY').format('D MMM');
@@ -143,9 +143,10 @@ class App extends Component {
       const calendars = this.state.legend.map(legend => (
         <Calendar
           key={ legend.name }
-          title={ legend.name }
-          goal={ legend.goal }
-          goalDescription={ legend.goalDescription }
+          goal={ legend.name }
+          frequency={ legend.frequency }
+          frequencyNum={ legend.goal.num }
+          frequencyDen={ legend.goal.den }
           entries={ this.state.entries }
         >
         </Calendar>

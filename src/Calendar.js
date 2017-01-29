@@ -14,14 +14,13 @@ export default class Calendar extends React.Component {
     this.today = moment().startOf('day');
     this.todayLabel = this.today.format('D MMM');
     this.firstMonday = moment().startOf('year').startOf('isoweek');
-    this.endOfYear = moment.endOf('year');
   }
 
   render() {
     return (
       <div className="Calendar">
-        <h2 className="title">{ this.props.title }</h2>
-        <h3 className="description">{ this.props.goalDescription }</h3>
+        <h2 className="goal">{ this.props.goal }</h2>
+        <h3 className="frequency">{ this.props.frequency }</h3>
         { this.renderContent() }
       </div>
     );
@@ -103,7 +102,7 @@ export default class Calendar extends React.Component {
         return { dayLabel, afterToday: true };
       }
 
-      mostRecent.push(!!(entriesByDate[dayLabel] && entriesByDate[dayLabel][this.props.title]));
+      mostRecent.push(!!(entriesByDate[dayLabel] && entriesByDate[dayLabel][this.props.goal]));
       mostRecent.shift();
       const score = this.getScore(mostRecent);
       const done = _.last(mostRecent);
@@ -113,11 +112,10 @@ export default class Calendar extends React.Component {
   }
 
   getScore(mostRecent) {
-    const { num, den } = this.props.goal;
-    const goal = num/den;
+    const goal = this.props.frequencyNum / this.props.frequencyDen;
 
-    const last = _.takeRight(mostRecent, den);
-    const score = _.sum(last) / den;
+    const last = _.takeRight(mostRecent, this.props.frequencyDen);
+    const score = _.sum(last) / this.props.frequencyDen;
     return score * 100 / goal;
   }
 
@@ -126,9 +124,9 @@ export default class Calendar extends React.Component {
     if (this.todayLabel === dayLabel) {
       label = 'Today';
     }
-    const goal = this.props.goal.num / this.props.goal.den;
-    const done = parseFloat((score * goal / 100 * this.props.goal.den).toFixed(1));
-    const period = this.props.goal.den;
+    const goal = this.props.frequencyNum / this.props.frequencyDen;
+    const done = parseFloat((score * goal / 100 * this.props.frequencyDen).toFixed(1));
+    const period = this.props.frequencyDen;
     switch (done) {
       case 0:
         break;
@@ -146,9 +144,10 @@ export default class Calendar extends React.Component {
   }
 
   static propTypes = {
-    title: React.PropTypes.string.isRequired,
-    goal: React.PropTypes.object.isRequired,
-    goalDescription: React.PropTypes.string.isRequired,
+    goal: React.PropTypes.string.isRequired,
+    frequency: React.PropTypes.string.isRequired,
+    frequencyNum: React.PropTypes.number.isRequired,
+    frequencyDen: React.PropTypes.number.isRequired,
     entries: React.PropTypes.array.isRequired,
   };
 }
