@@ -31,13 +31,13 @@
 
 .Calendar table td {
   padding: 0;
-  width: 16px;
-  height: 16px;
+  width: 1em;
+  height: 1em;
   display: inline-block;
 }
 
 .Calendar table td span {
-  border-radius: 8px;
+  border-radius: .5em;
 }
 
 .Calendar table td.goal-100 {
@@ -45,19 +45,19 @@
 }
 
 .Calendar table td.goal-100.first {
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
+  border-top-left-radius: .5em;
+  border-bottom-left-radius: .5em;
 }
 
 .Calendar table td.goal-100.last {
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-top-right-radius: .5em;
+  border-bottom-right-radius: .5em;
 }
 
 .Calendar table td span {
-  margin: 6px;
-  width: 4px;
-  height: 4px;
+  margin: .375em;
+  width: .25em;
+  height: .25em;
   display: inline-block;
   background-color: #efefef;
 }
@@ -67,9 +67,9 @@
 }
 
 .Calendar table td span.yeah {
-  margin: 5px;
-  width: 6px;
-  height: 6px;
+  margin: .3125em;
+  width: .375em;
+  height: .375em;
   background-color: #555555;
 }
 
