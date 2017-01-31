@@ -28,7 +28,7 @@ class App extends Component {
     window.gapi.load('client', () => {
       this.fetchData();
       this.timerID = setInterval(
-        () => this.fetchData,
+        () => this.fetchData(),
         this.props.refreshInterval
       );
     });
