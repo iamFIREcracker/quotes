@@ -15,9 +15,6 @@ const DAYS = DAYS_PER_ROW * Math.ceil(365 / DAYS_PER_ROW);
 class App extends Component {
   constructor(props) {
     super(props);
-    this.today = moment().startOf('day');
-    this.todayLabel = this.today.format('D MMM');
-    this.firstMonday = moment().startOf('year').startOf('isoweek');
     this.state = {
       legend: [],
       entries: []
@@ -26,9 +23,9 @@ class App extends Component {
 
   componentDidMount() {
     window.gapi.load('client', () => {
-      this.fetchData();
+      this.reload();
       this.timerID = setInterval(
-        () => this.fetchData(),
+        () => this.reload(),
         this.props.refreshInterval
       );
     });
@@ -38,7 +35,11 @@ class App extends Component {
     clearInterval(this.timerID);
   }
 
-  fetchData() {
+  reload() {
+    console.log(new Date(), 'reload');
+    this.today = moment().startOf('day');
+    this.todayLabel = this.today.format('D MMM');
+    this.firstMonday = moment().startOf('year').startOf('isoweek');
     window.gapi.client.load('sheets', 'v4', () => {
       this.loadData((data, error) => {
         if (error) {
