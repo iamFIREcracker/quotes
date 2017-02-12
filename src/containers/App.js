@@ -6,6 +6,8 @@ import Alert from '../components/Alert';
 import Calendar from '../components/Calendar';
 import Loader from '../components/Loader';
 
+import { parseResolutions } from '../helpers/resolutions';
+
 import './App.css';
 
 class App extends Component {
@@ -18,13 +20,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    window.gapi.load('client', () => {
-      this.reload();
-      this.timerID = setInterval(
-        () => this.reload(),
-        this.props.refreshInterval
-      );
-    });
+    this.reload();
+    this.timerID = setInterval(
+      () => this.reload(),
+      this.props.refreshInterval
+    );
   }
 
   componentWillUnmount() {
@@ -32,72 +32,20 @@ class App extends Component {
   }
 
   reload() {
-    console.log(new Date(), 'reload');
     this.today = moment().startOf('day');
     this.firstDayOfYear = moment().startOf('year');
-    window.gapi.client.load('sheets', 'v4', () => {
-      this.loadData((data, error) => {
-        if (error) {
-          this.setState({
-            error
-          });
-        } else {
-          this.setState({
-            legend: data.legend,
-            entries: data.entries
-          });
-        }
+    window.gapi.load('client', () => {
+      window.gapi.client.load('sheets', 'v4', () => {
+        window.gapi.client.sheets.spreadsheets.values.get({
+          key: 'AIzaSyDwSI9VlOBTMTYoXR4_S3agLDJhph0lTKg',
+          spreadsheetId: this.props.spreadsheetId,
+          range: `Data!A1:Z`
+        }).then(
+          response => this.setState(_.pick(parseResolutions(response), ['legend', 'entries'])),
+          response => this.setState(response.result.error)
+        );
       });
     });
-  }
-
-  loadData(callback) {
-    let goalsName;
-    let goalsFormula;
-    let goalsDescription;
-    let legend = [];
-    const entries = [];
-    window.gapi.client.sheets.spreadsheets.values.get({
-      key: 'AIzaSyDwSI9VlOBTMTYoXR4_S3agLDJhph0lTKg',
-      spreadsheetId: this.props.spreadsheetId,
-      range: `Data!A1:${'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[20]}`
-    }).then(
-      (response) => {
-        const data = response.result.values || [];
-        data.forEach(row => {
-          if (!goalsName) {
-            goalsName = row.filter(v => v);
-          } else if (!goalsFormula) {
-            goalsFormula = row.filter(v => v).map(v => {
-              const groups = /([0-9]+)\/([0-9]+)/.exec(v);
-              const num = parseInt(groups[1], 10);
-              const den = parseInt(groups[2], 10);
-              return { num, den };
-            });
-          } else if (!goalsDescription) {
-            goalsDescription = row.filter(v => v);
-            legend = _.zipWith(goalsName, goalsFormula, goalsDescription, (name, goal, frequency) => ({
-              name, 
-              goal,
-              frequency
-            }));
-          } else {
-            const date = moment.utc(row[0], 'M/D/YYYY').format('D MMM');
-            let done = {};
-            let i = 1;
-            while (i < row.length) {
-              if (row[i]) {
-                done[legend[i - 1].name] = true
-              }
-              i++;
-            }
-            entries.push({ _date: date, ...done });
-          }
-        });
-        callback({ legend, entries });
-      }, (response) => {
-        callback(null, response.result.error);
-      });
   }
 
   render() {
