@@ -19,7 +19,7 @@
   font-weight: normal;
 }
 
-.Calendar .textContainer h3.frequency {
+.Calendar .textContainer h3.target {
   font-family: 'Libre Baskerville', serif;
   font-size: 16px;
   color: #afafaf;
@@ -57,14 +57,14 @@
   border-radius: 50%;
 }
 
-.Day div.goal-100 {
+.Day div.aboveTarget {
   background-color: #afafaf;
 }
 
 .Day div {
   position: relative;
 }
-td.goal-100 + td.goal-100 .Day div.goal-100:before {
+td.aboveTarget + td.aboveTarget .Day div.aboveTarget:before {
   content: '';
   position: absolute;
   width: 1em;
@@ -82,11 +82,11 @@ td.goal-100 + td.goal-100 .Day div.goal-100:before {
   background-color: #efefef;
 }
 
-.Day div.goal-100 span {
+.Day div.aboveTarget span {
   background-color: #cccccc;
 }
 
-.Day div span.yeah {
+.Day div span.progressed {
   margin: .3125em;
   width: .375em;
   height: .375em;
@@ -97,6 +97,6 @@ td.goal-100 + td.goal-100 .Day div.goal-100:before {
   background-color: #70c8fb;
 }
 
-.Day div.goal-100 span.today {
+.Day div.aboveTarget span.today {
   background-color: #83dbff;
 }

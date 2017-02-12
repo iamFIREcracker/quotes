@@ -4,7 +4,7 @@ import moment from 'moment';
 function parseData(response) {
   let goalsName;
   let goalsFormula;
-  let goalsDescription;
+  let goalsTarget;
   let legend = [];
   const entries = [];
   const data = response.result.values || [];
@@ -18,13 +18,13 @@ function parseData(response) {
         const den = parseInt(groups[2], 10);
         return { num, den };
       });
-    } else if (!goalsDescription) {
-      goalsDescription = row.filter(v => v);
+    } else if (!goalsTarget) {
+      goalsTarget = row.filter(v => v);
       legend = _.zipWith(
         goalsName,
         goalsFormula,
-        goalsDescription,
-        (name, goal, frequency) => ({name, goal, frequency})
+        goalsTarget,
+        (name, goal, target) => ({name, goal, target})
       );
     } else {
       const date = moment(row[0], 'M/D/YYYY').format('D MMM');
@@ -78,11 +78,11 @@ function getDiary(legend, entries) {
     mostRecent.push(!!(entriesByDate[dayLabel] && entriesByDate[dayLabel][legend.name]));
     mostRecent.shift();
 
-    const improvement = _.last(mostRecent);
+    const progressed = _.last(mostRecent);
     const successPercentage = getSuccessPercentage(legend, mostRecent);
-    const success = successPercentage >= 100;
+    const aboveTarget = successPercentage >= 100;
     const note = getNote(legend, successPercentage);
-    return { day, note, isToday: day.isSame(today), improvement, success };
+    return { day, note, isToday: day.isSame(today), progressed, aboveTarget };
   });
 }
 
@@ -90,7 +90,7 @@ export function parseResolutions(response) {
   const { legend, entries } = parseData(response);
   return legend.map(legend =>({
     name: legend.name,
-    frequency: legend.frequency,
+    target: legend.target,
     diary: getDiary(legend, entries)
   }));
 };

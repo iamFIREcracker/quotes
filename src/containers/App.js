@@ -91,7 +91,7 @@ class App extends Component {
         <Calendar
           key={ resolution.name }
           name={ resolution.name }
-          frequency={ resolution.frequency }
+          target={ resolution.target }
           data={ resolution.diary }
         >
         </Calendar>

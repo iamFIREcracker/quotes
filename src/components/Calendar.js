@@ -28,16 +28,16 @@ class Day extends React.Component {
 
   getContainerClassName() {
     const classes = [];
-    if (this.props.success) {
-      classes.push('goal-100');
+    if (this.props.aboveTarget) {
+      classes.push('aboveTarget');
     }
     return classes.join(' ');
   }
 
   getClassName() {
     const classes = [];
-    if (this.props.improvement) {
-      classes.push('yeah');
+    if (this.props.progressed) {
+      classes.push('progressed');
     }
     if (this.props.isToday) {
       classes.push('today');
@@ -48,8 +48,8 @@ class Day extends React.Component {
   static propTypes = {
     label: React.PropTypes.string.isRequired,
     isToday: React.PropTypes.bool,
-    improvement: React.PropTypes.bool,
-    success: React.PropTypes.bool,
+    progressed: React.PropTypes.bool,
+    aboveTarget: React.PropTypes.bool,
   }
 };
 
@@ -66,7 +66,7 @@ export default class Calendar extends React.Component {
       <div className="Calendar">
         <div className="textContainer">
           <h2 className="name">{ this.props.name }</h2>
-          <h3 className="frequency">{ this.props.frequency }</h3>
+          <h3 className="target">{ this.props.target }</h3>
         </div>
         { this.renderContent() }
       </div>
@@ -85,7 +85,7 @@ export default class Calendar extends React.Component {
           ...entry
         }
         // this enables some CSS magic to join adj success days
-        const tdClass = entry.success ? 'goal-100' : undefined;
+        const tdClass = entry.aboveTarget ? 'aboveTarget' : undefined;
         return (
           <td
             key={ j }
@@ -132,7 +132,7 @@ export default class Calendar extends React.Component {
 
   static propTypes = {
     name: React.PropTypes.string.isRequired,
-    frequency: React.PropTypes.string.isRequired,
+    target: React.PropTypes.string.isRequired,
     data: React.PropTypes.array.isRequired,
   };
 }
