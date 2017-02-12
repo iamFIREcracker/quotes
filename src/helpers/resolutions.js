@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import moment from 'moment';
 
-export function parseResolutions(response) {
+function parseData(response) {
   let goalsName;
   let goalsFormula;
   let goalsDescription;
@@ -27,7 +27,7 @@ export function parseResolutions(response) {
         (name, goal, frequency) => ({name, goal, frequency})
       );
     } else {
-      const date = moment.utc(row[0], 'M/D/YYYY').format('D MMM');
+      const date = moment(row[0], 'M/D/YYYY').format('D MMM');
       let done = {};
       let i = 1;
       while (i < row.length) {
@@ -42,3 +42,55 @@ export function parseResolutions(response) {
   return { legend, entries };
 };
 
+function getNote(legend, successPercentage) {
+  let note = '';
+  const goal = legend.goal.num / legend.goal.den;
+  const done = parseFloat((successPercentage * goal / 100 * legend.goal.den).toFixed(1));
+  const period = legend.goal.den;
+  switch (done) {
+    case 0:
+      break;
+    case 1:
+      note = `1 time in the last ${period} days`;
+      break;
+    default:
+      note = `${done} times in the last ${period} days`;
+      break;
+  }
+  return note;
+}
+
+function getSuccessPercentage(legend, mostRecent) {
+  const goal = legend.goal.num / legend.goal.den;
+
+  const last = _.takeRight(mostRecent, legend.goal.den);
+  const actual = _.sum(last) / legend.goal.den;
+  return actual * 100 / goal;
+}
+
+function getDiary(legend, entries) {
+  const today = moment().startOf('day');
+  const entriesByDate = _.keyBy(entries, '_date');
+  const mostRecent = _.times(legend.goal.den, _.constant(false));
+  return _.range(today.dayOfYear()).map((i) => {
+    const day = today.clone().dayOfYear(i + 1); // 1-based 
+    const dayLabel = day.format('D MMM');
+    mostRecent.push(!!(entriesByDate[dayLabel] && entriesByDate[dayLabel][legend.name]));
+    mostRecent.shift();
+
+    const improvement = _.last(mostRecent);
+    const successPercentage = getSuccessPercentage(legend, mostRecent);
+    const success = successPercentage >= 100;
+    const note = getNote(legend, successPercentage);
+    return { day, note, isToday: day.isSame(today), improvement, success };
+  });
+}
+
+export function parseResolutions(response) {
+  const { legend, entries } = parseData(response);
+  return legend.map(legend =>({
+    name: legend.name,
+    frequency: legend.frequency,
+    diary: getDiary(legend, entries)
+  }));
+};

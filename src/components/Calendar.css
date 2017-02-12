@@ -8,7 +8,8 @@
   width: 22em;
   margin: auto;
 }
-.Calendar .textContainer h2.goal {
+
+.Calendar .textContainer h2.name {
   margin: 3em 0 .5em;
 
   font-family: 'Roboto Slab';

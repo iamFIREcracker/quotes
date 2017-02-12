@@ -65,7 +65,7 @@ export default class Calendar extends React.Component {
     return (
       <div className="Calendar">
         <div className="textContainer">
-          <h2 className="goal">{ this.props.goal }</h2>
+          <h2 className="name">{ this.props.name }</h2>
           <h3 className="frequency">{ this.props.frequency }</h3>
         </div>
         { this.renderContent() }
@@ -74,13 +74,18 @@ export default class Calendar extends React.Component {
   }
 
   renderContent() {
-    const rows = _.chunk(this.getAllDaysOfYear(this.props.days), DAYS_PER_ROW).map((data, i) => {
-      const columns = data.map((props, j) => {
-        if (!props.label) {
+    const rows = _.chunk(this.getAllDaysOfYear(this.props.data), DAYS_PER_ROW).map((data, i) => {
+      const columns = data.map((entry, j) => {
+        if (!entry) {
           return <td key={ j }></td>
         }
+
+        const props = {
+          label: this.getDayLabel(entry),
+          ...entry
+        }
         // this enables some CSS magic to join adj success days
-        const tdClass = props.success ? 'goal-100' : undefined;
+        const tdClass = entry.success ? 'goal-100' : undefined;
         return (
           <td
             key={ j }
@@ -103,15 +108,31 @@ export default class Calendar extends React.Component {
   }
 
   getAllDaysOfYear() {
+    const tillEndOfYear = 365 - this.props.data.length;
+    const additionalDaysToAlign = DAYS - 365;
     return _.concat(
-      this.props.days,
-      _.times(DAYS - this.props.days.length, _.constant({}))
+      this.props.data,
+      _.times(tillEndOfYear, i => ({
+        day: moment().dayOfYear(this.props.data.length + i + 1) // dayOfYear accepts 1 - 366
+      })),
+      _.times(additionalDaysToAlign, _.constant(undefined))
     );
   }
 
+  getDayLabel(entry) {
+    let label = entry.day.format('ddd D MMM');
+    if (entry.isToday) {
+      label = 'Today';
+    }
+    if (entry.note) {
+      label = `${label} — ${entry.note}`;
+    }
+    return label;
+  }
+
   static propTypes = {
-    goal: React.PropTypes.string.isRequired,
+    name: React.PropTypes.string.isRequired,
     frequency: React.PropTypes.string.isRequired,
-    days: React.PropTypes.array.isRequired,
+    data: React.PropTypes.array.isRequired,
   };
 }
