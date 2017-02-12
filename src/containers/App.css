@@ -23,20 +23,11 @@ body {
 }
 
 .brand {
+  max-width: 40em;
   font-family: 'Bungee Shade';
   font-size: 44px;
 
   margin: 0 0 30px;
-}
-
-.description {
-  max-width: 40em;
-  margin: 0 auto 10px;
-
-  font-family: 'Libre Baskerville', serif;
-  font-size: 14px;
-  color: #afafaf;
-  font-style: italic;
 }
 
 @media (min-width: 37.5em) {
@@ -45,3 +36,25 @@ body {
   }
 }
 
+.description p, .footer p {
+  max-width: 30em;
+  margin: 0 auto 10px;
+
+  font-family: 'Libre Baskerville', serif;
+  font-size: 14px;
+  font-style: italic;
+
+  padding: 1.5em;
+  line-height: 1.6em;
+}
+
+.description {
+  color: #afafaf;
+  text-align: justify;
+}
+
+.footer {
+  color: #efefef;
+  background-color: #70c8fb;
+  text-align: left;
+}

@@ -49,6 +49,7 @@
   line-height: 0;
   table-layout: fixed;
   border-spacing: 0px;
+  display: inline-block;
 }
 
 .Day div {

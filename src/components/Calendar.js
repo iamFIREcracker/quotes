@@ -7,7 +7,7 @@ import './Calendar.css';
 const DAYS_PER_ROW = 21;
 const DAYS = DAYS_PER_ROW * Math.ceil(365 / DAYS_PER_ROW);
 
-class Day extends React.Component {
+export class Day extends React.Component {
   render() {
     return (
       <div
@@ -53,7 +53,7 @@ class Day extends React.Component {
   }
 };
 
-export default class Calendar extends React.Component {
+export class Calendar extends React.Component {
   constructor(props) {
     super(props);
     this.today = moment().startOf('day');
@@ -140,4 +140,4 @@ export default class Calendar extends React.Component {
     target: React.PropTypes.string.isRequired,
     data: React.PropTypes.array.isRequired,
   };
-}
+};

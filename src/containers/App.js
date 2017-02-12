@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 
 import Alert from '../components/Alert';
-import Calendar from '../components/Calendar';
+import { Day, Calendar } from '../components/Calendar';
 import Loader from '../components/Loader';
 
 import { parseResolutions } from '../helpers/resolutions';
@@ -45,37 +45,40 @@ class App extends Component {
   }
 
   render() {
+    console.log(Calendar);
+    const dayWithProgress = <Day label={ 'Some progress' } progressed={ true } />;
+    const dayWithAboveTarget = <Day label={ 'Yeah!' } aboveTarget={ true } />;
+    const dayWithAboveTargetAndProgress = (
+      <Day
+        label={ 'Yeah!' }
+        aboveTarget={ true }
+        progressed={ true }
+      />
+    );
+    const dayWithNothing = <Day label={ 'Not much...' } />;
     const spreadsheetUrl = `https://docs.google.com/spreadsheets/d/${this.props.spreadsheetId }`;
-    const locationHashUrl = `./#${this.props.spreadsheetId}`;
+    const spreadsheetLink = <a target='_blank' href={ spreadsheetUrl }>spreadsheet</a>;
     return (
       <div className="app">
         <h1 className="brand">“Resolutions”</h1>
-        <p className="description">
-          * This page uses
-          &nbsp;
-          <a
-            target='_blank'
-            href={ spreadsheetUrl }
-          >
-            this
-          </a>
-          &nbsp;
-          Google sheet as source of data.
-        </p>
-        <p className="description">
-          ** You can change the sourced sheet by setting the Location hash property to its ID
-          <br />
-          (e.g.
-          &nbsp;
-          <a
-            href={ locationHashUrl }
-          >
-            { locationHashUrl }
-          </a>
-          &nbsp;
-          )
-        </p>
+        <div className="description">
+          <p>
+            Each calendar says how you are faring with a specific new year resolution.
+            Days in which nothing interesting has happened are represented by a { dayWithNothing },
+            days in which there has been some kind of progress (eg. you exercised) are represented
+            by a { dayWithProgress }, while days in which XXX (eg. you checked Facebook no more than
+            3 times a week) are represented by either a { dayWithAboveTarget } or
+            a { dayWithAboveTargetAndProgress }
+          </p>
+        </div>
         { this.renderContent() }
+        <div className="footer">
+          <p>
+            This page reads data from this { spreadsheetLink }.  You can visualize your new year
+            resolutions by setting the Location hash property to the ID of the spreadsheet
+            containing your data.
+          </p>
+        </div>
       </div>
     );
   }
