@@ -3,10 +3,9 @@
   margin: auto;
 }
 
-/* XXX the following screws rendering of pseudo elements */
-/* .Calendar:nth-child(even) { */
-/*   background-color: #f9f9f9; */
-/* } */
+.Calendar:nth-child(odd) {
+  background-color: #f9f9f9;
+}
 
 .Calendar .textContainer {
   width: 22em;

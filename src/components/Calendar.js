@@ -84,11 +84,16 @@ export default class Calendar extends React.Component {
           label: this.getDayLabel(entry),
           ...entry
         }
+        const tdStyle = {
+          position: 'relative',
+          zIndex: DAYS_PER_ROW - j
+        }
         // this enables some CSS magic to join adj success days
         const tdClass = entry.aboveTarget ? 'aboveTarget' : undefined;
         return (
           <td
             key={ j }
+            style={ tdStyle }
             className={ tdClass }>
             <Day {...props}></Day>
           </td>
