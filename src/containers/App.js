@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import moment from 'moment';
 
-import Alert from './Alert';
-import Calendar from './Calendar';
-import Loader from './Loader';
+import Alert from '../components/Alert';
+import Calendar from '../components/Calendar';
+import Loader from '../components/Loader';
 
 import './App.css';
 
