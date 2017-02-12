@@ -2,10 +2,13 @@
   display: inline-block;
   margin-left: .5em;
   margin-right: .5em;
-  width: 22em;
 }
 
-.Calendar h2.goal {
+.Calendar .textContainer {
+  width: 22em;
+  margin: auto;
+}
+.Calendar .textContainer h2.goal {
   margin: 3em 0 .5em;
 
   font-family: 'Roboto Slab';
@@ -15,7 +18,7 @@
   font-weight: normal;
 }
 
-.Calendar h3.frequency {
+.Calendar .textContainer h3.frequency {
   font-family: 'Libre Baskerville', serif;
   font-size: 16px;
   color: #afafaf;

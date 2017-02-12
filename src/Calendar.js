@@ -64,8 +64,10 @@ export default class Calendar extends React.Component {
   render() {
     return (
       <div className="Calendar">
-        <h2 className="goal">{ this.props.goal }</h2>
-        <h3 className="frequency">{ this.props.frequency }</h3>
+        <div className="textContainer">
+          <h2 className="goal">{ this.props.goal }</h2>
+          <h3 className="frequency">{ this.props.frequency }</h3>
+        </div>
         { this.renderContent() }
       </div>
     );
@@ -77,6 +79,7 @@ export default class Calendar extends React.Component {
         if (!props.label) {
           return <td key={ j }></td>
         }
+        // this enables some CSS magic to join adj success days
         const tdClass = props.success ? 'goal-100' : undefined;
         return (
           <td
