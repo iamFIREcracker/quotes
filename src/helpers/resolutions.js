@@ -1,13 +1,12 @@
 import _ from 'lodash';
 import moment from 'moment';
 
-function parseData(response) {
+function parseData(data) {
   let goalsName;
   let goalsFormula;
   let goalsTarget;
   let legend = [];
   const entries = [];
-  const data = response.result.values || [];
   data.forEach(row => {
     if (!goalsName) {
       goalsName = row.filter(v => v);
@@ -86,8 +85,8 @@ function getDiary(legend, entries) {
   });
 }
 
-export function parseResolutions(response) {
-  const { legend, entries } = parseData(response);
+export function parseResolutions(data) {
+  const { legend, entries } = parseData(data);
   return legend.map(legend =>({
     name: legend.name,
     target: legend.target,

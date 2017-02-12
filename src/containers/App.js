@@ -37,7 +37,7 @@ class App extends Component {
           spreadsheetId: this.props.spreadsheetId,
           range: `Data!A1:Z`
         }).then(
-          response => this.setState({ resolutions: parseResolutions(response) }),
+          response => this.setState({ resolutions: parseResolutions(response.result.values) }),
           response => this.setState(response.result.error)
         );
       });
