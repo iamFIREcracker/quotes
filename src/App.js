@@ -4,13 +4,9 @@ import moment from 'moment';
 
 import Alert from './Alert';
 import Calendar from './Calendar';
-import Day from './Day';
 import Loader from './Loader';
 
 import './App.css';
-
-const DAYS_PER_ROW = 21;
-const DAYS = DAYS_PER_ROW * Math.ceil(365 / DAYS_PER_ROW);
 
 class App extends Component {
   constructor(props) {
@@ -38,8 +34,7 @@ class App extends Component {
   reload() {
     console.log(new Date(), 'reload');
     this.today = moment().startOf('day');
-    this.todayLabel = this.today.format('D MMM');
-    this.firstMonday = moment().startOf('year').startOf('isoweek');
+    this.firstDayOfYear = moment().startOf('year');
     window.gapi.client.load('sheets', 'v4', () => {
       this.loadData((data, error) => {
         if (error) {
@@ -153,9 +148,8 @@ class App extends Component {
           key={ legend.name }
           goal={ legend.name }
           frequency={ legend.frequency }
-          daysPerRow={ DAYS_PER_ROW }
+          days={ this.getDays(legend) }
         >
-          { this.getDays(legend) }
         </Calendar>
       ));
       return (
@@ -168,98 +162,61 @@ class App extends Component {
   }
 
   getDays(legend) {
-    const data = this.getDaysData(legend);
-    return data.map(({ dayLabel, differentYear, afterToday, score, done }, i) => {
-      if (differentYear) {
-        return undefined;
-      }
-      if (afterToday) {
-        return (
-          <Day
-            key={ dayLabel }
-            label={ dayLabel }
-          >
-          </Day>
-        );
-      }
-
-      const prevScore = (data[i - 1] && data[i - 1].score) || 0;
-      const nextScore = (data[i + 1] && data[i + 1].score) || 0;
-
-      const label = this.getContainerLabel(legend, dayLabel, score);
-      const isToday = this.todayLabel === dayLabel;
-      const scored = done;
-      const success = score >= 100;
-      const firstInARow = success && prevScore < 100;
-      const lastInARow = success && nextScore < 100;
-      return (
-        <Day
-          key={ dayLabel }
-          label={ label }
-          isToday={ isToday }
-          scored={ scored }
-          success={ score >= 100 }
-          firstInARow={ firstInARow }
-          lastInARow={ lastInARow }
-        >
-        </Day>
-      );
-    });
-  }
-
-  getDaysData(legend) {
     const entriesByDate = _.keyBy(this.state.entries, '_date');
-    const mostRecent = _.times(7, _.constant(false));
-    return _.range(DAYS + 1).map((i) => {
-      const day = this.firstMonday.clone().add(i, 'days');
-      const dayLabel = day.format('D MMM');
-      if (day.year() !== this.today.year()) {
-        return { dayLabel, differentYear: true };
-      }
-
+    const mostRecent = _.times(legend.goal.den, _.constant(false));
+    return _.range(365).map((i) => {
+      const day = this.firstDayOfYear.clone().add(i, 'days');
       if (day.isAfter(this.today)) {
-        return { dayLabel, afterToday: true };
+        const label = this.getLabel(day);
+        return { label };
+      } else {
+        const dayLabel = day.format('D MMM');
+        mostRecent.push(!!(entriesByDate[dayLabel] && entriesByDate[dayLabel][legend.name]));
+        mostRecent.shift();
+
+        const improvement = _.last(mostRecent);
+        const successPercentage = this.getSuccessPercentage(legend, mostRecent);
+        const success = successPercentage >= 100;
+        const label = this.getLabel(day, legend, successPercentage);
+        const isToday = this.isToday(day);
+        return { label, isToday, improvement, success };
       }
-
-      mostRecent.push(!!(entriesByDate[dayLabel] && entriesByDate[dayLabel][legend.name]));
-      mostRecent.shift();
-      const score = this.getScore(legend, mostRecent);
-      const done = _.last(mostRecent);
-
-      return { dayLabel, score, done };
     });
   }
 
-  getScore(legend, mostRecent) {
+  getSuccessPercentage(legend, mostRecent) {
     const goal = legend.goal.num / legend.goal.den;
 
     const last = _.takeRight(mostRecent, legend.goal.den);
-    const score = _.sum(last) / legend.goal.den;
-    return score * 100 / goal;
+    const actual = _.sum(last) / legend.goal.den;
+    return actual * 100 / goal;
   }
 
-  getContainerLabel(legend, dayLabel, score) {
-    let label = dayLabel;
-    if (this.todayLabel === dayLabel) {
+  getLabel(day, legend, successPercentage) {
+    let label = day.format('ddd D MMM');
+    if (this.isToday(day)) {
       label = 'Today';
     }
-    const goal = legend.goal.num / legend.goal.den;
-    const done = parseFloat((score * goal / 100 * legend.goal.den).toFixed(1));
-    const period = legend.goal.den;
-    switch (done) {
-      case 0:
-        break;
-      case 1:
-        label = `${label} — 1 time in the last ${period} days`;
-        break;
-      default:
-        label = `${label} — ${done} times in the last ${period} days`;
-        break;
-    }
-    if (score >= 100) {
-      label = `${label} — you did it!`;
+    if (legend) {
+      const goal = legend.goal.num / legend.goal.den;
+      const done = parseFloat((successPercentage * goal / 100 * legend.goal.den).toFixed(1));
+      const period = legend.goal.den;
+      switch (done) {
+        case 0:
+          break;
+        case 1:
+          label = `${label} — 1 time in the last ${period} days`;
+          break;
+        default:
+          label = `${label} — ${done} times in the last ${period} days`;
+          break;
+      }
     }
     return label;
+  }
+
+  isToday(day) {
+    return this.today.isSame(day);
   }
 
   static propTypes = {
