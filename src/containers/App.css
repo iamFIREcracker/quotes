@@ -10,12 +10,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-@media (min-width: 37.5em) {
-  body {
-    padding: 40px;
-  }
-}
-
 .app {
   margin: 0 auto;
 
@@ -25,14 +19,14 @@ body {
 .brand {
   max-width: 40em;
   font-family: 'Bungee Shade';
-  font-size: 44px;
+  font-size: 34px;
 
   margin: 0 0 30px;
 }
 
 @media (min-width: 37.5em) {
   .brand {
-    font-size: 75px;
+    font-size: 54px;
   }
 }
 
