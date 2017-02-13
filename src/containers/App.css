@@ -21,7 +21,7 @@ body {
   font-family: 'Bungee Shade';
   font-size: 34px;
 
-  margin: 0 0 30px;
+  margin: 0;
 }
 
 @media (min-width: 37.5em) {
@@ -32,7 +32,7 @@ body {
 
 .description p, .footer p {
   max-width: 30em;
-  margin: 0 auto 10px;
+  margin: 0 auto;
 
   font-family: 'Libre Baskerville', serif;
   font-size: 14px;
@@ -43,6 +43,7 @@ body {
 }
 
 .description {
+  margin-bottom: 10px;
   color: #afafaf;
   text-align: justify;
 }
