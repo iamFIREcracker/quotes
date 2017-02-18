@@ -30,6 +30,49 @@ body {
   }
 }
 
+.action {
+  color: #8C489F;
+  font-weight: bold;
+}
+
+.frequency {
+  color: orange;
+  font-weight: bold;
+}
+
+.description {
+  margin-bottom: 10px;
+  color: #afafaf;
+  text-align: justify;
+}
+
+.description p + p {
+  padding-top: 0;
+}
+
+.description p ul {
+  list-style: none;
+  padding: 0;
+}
+
+.description p ul li + li {
+  margin-top: .5em;
+}
+
+.footer {
+  color: #efefef;
+  background-color: #555555;
+  text-align: left;
+}
+
+.footer a {
+  color: orange;
+}
+
+.footer a:visited {
+  color: inherit;
+}
+
 .description p, .footer p {
   max-width: 30em;
   margin: 0 auto;
@@ -40,16 +83,4 @@ body {
 
   padding: 1.5em;
   line-height: 1.6em;
-}
-
-.description {
-  margin-bottom: 10px;
-  color: #afafaf;
-  text-align: justify;
-}
-
-.footer {
-  color: #efefef;
-  background-color: #70c8fb;
-  text-align: left;
 }

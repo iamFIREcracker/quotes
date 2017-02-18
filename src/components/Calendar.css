@@ -14,7 +14,7 @@
 }
 
 .Calendar .textContainer h2.name {
-  margin-bottom: .5em;
+  margin: 0 auto 1em;
 
   font-family: 'Roboto Slab';
   font-size: 16px;
@@ -24,6 +24,8 @@
 }
 
 .Calendar .textContainer h3.target {
+  margin: 0 auto 1em;
+
   font-family: 'Libre Baskerville', serif;
   font-size: 16px;
   color: #afafaf;
@@ -63,12 +65,13 @@
 }
 
 .Day div.aboveTarget {
-  background-color: #afafaf;
+  background-color: orange;
 }
 
 .Day div {
   position: relative;
 }
+
 td.aboveTarget + td.aboveTarget .Day div.aboveTarget:before {
   content: '';
   position: absolute;
@@ -76,32 +79,35 @@ td.aboveTarget + td.aboveTarget .Day div.aboveTarget:before {
   height: 1em;
   left: -0.5em;
   z-index: -1;
-  background-color: #afafaf;
+  background-color: orange;
 }
 
 .Day div span {
-  margin: .375em;
-  width: .25em;
-  height: .25em;
-  display: inline-block;
-  background-color: #efefef;
-}
-
-.Day div.aboveTarget span {
-  background-color: #cccccc;
-}
-
-.Day div span.progressed {
   margin: .3125em;
   width: .375em;
   height: .375em;
-  background-color: #555555;
+  display: inline-block;
+  background-color: #ebebeb;
 }
 
-.Day div span.today {
+.Calendar:nth-child(odd) .Day div span {
+  background-color: #dedede;
+}
+
+.Day div.aboveTarget span, /* This is requried to use the standalone element inside the agenda */
+.Calendar .Day div.aboveTarget span {
+  background-color: inherit;
+}
+
+.Day div span.progressed, /* This is required to use the standalone element inside the agenda */
+.Calendar .Day div span.progressed {
+  background-color: #8C489F;
+}
+
+.Calendar .Day div span.today {
   background-color: #70c8fb;
 }
 
-.Day div.aboveTarget span.today {
+.Calendar .Day div.aboveTarget span.today {
   background-color: #83dbff;
 }

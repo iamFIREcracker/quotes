@@ -48,13 +48,6 @@ class App extends Component {
     console.log(Calendar);
     const dayWithProgress = <Day label={ 'Some progress' } progressed={ true } />;
     const dayWithAboveTarget = <Day label={ 'Yeah!' } aboveTarget={ true } />;
-    const dayWithAboveTargetAndProgress = (
-      <Day
-        label={ 'Yeah!' }
-        aboveTarget={ true }
-        progressed={ true }
-      />
-    );
     const dayWithNothing = <Day label={ 'Not much...' } />;
     const spreadsheetUrl = `https://docs.google.com/spreadsheets/d/${this.props.spreadsheetId }`;
     const spreadsheetLink = <a target='_blank' href={ spreadsheetUrl }>spreadsheet</a>;
@@ -63,20 +56,23 @@ class App extends Component {
         <h1 className="brand">“Resolutions”</h1>
         <div className="description">
           <p>
-            Each calendar says how you are faring with a specific new year resolution.
-            Days in which nothing interesting has happened are represented by a { dayWithNothing },
-            days in which there has been some kind of progress (eg. you exercised) are represented
-            by a { dayWithProgress }, while days in which XXX (eg. you checked Facebook no more than
-            3 times a week) are represented by either a { dayWithAboveTarget } or
-            a { dayWithAboveTargetAndProgress }
+            New year resolutions are defined in terms of <span className="action">actions</span> and <span className="frequency">frequencies</span>&nbsp;
+            (read every day, run at least two days a week),
+            and each calendar below says how you are faring with a specific new year resolution you set for yourself
+          </p>
+          <p>
+            <ul>
+              <li> { dayWithNothing } is a day in which you did not do anything special</li>
+              <li> { dayWithProgress } is day in which you progressed toward your goal (eg. you exercised)</li>
+              <li> { dayWithAboveTarget } is a day in which you are above your weekly target (eg. in the last week you checked on Facebook no more than 3 times)</li>
+            </ul>
           </p>
         </div>
         { this.renderContent() }
         <div className="footer">
           <p>
             This page reads data from this { spreadsheetLink }.  You can visualize your new year
-            resolutions by setting the Location hash property to the ID of the spreadsheet
-            containing your data.
+            resolutions by setting the Location hash property equal to the ID of your spreadsheet.
           </p>
         </div>
       </div>
