@@ -19,9 +19,9 @@ body {
 .brand {
   max-width: 40em;
   font-family: 'Bungee Shade';
-  font-size: 34px;
+  font-size: 32px;
 
-  margin: 0;
+  margin: .5em 0;
 }
 
 @media (min-width: 37.5em) {
@@ -73,7 +73,8 @@ body {
   color: inherit;
 }
 
-.description p, .footer p {
+.description p,
+.footer p {
   max-width: 30em;
   margin: 0 auto;
 
@@ -81,6 +82,14 @@ body {
   font-size: 14px;
   font-style: italic;
 
-  padding: 1.5em;
   line-height: 1.6em;
+  padding: 0.5em 2.5em;
 }
+
+@media (min-width: 37.5em) {
+  .description p,
+  .footer p {
+    padding: 0.5em 1.5em;
+  }
+}
+

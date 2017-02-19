@@ -1,7 +1,7 @@
 .Calendar {
   display: block;
   margin: auto;
-  padding: 1em 0;
+  padding: 3em 0;
 }
 
 .Calendar:nth-child(odd) {
