@@ -2,18 +2,20 @@
 
 A React App which helps you keep track of your new year resolutions.
 
+![Screenshot](/screenshot.png?raw=true "Screenshot")
+
 It reads data from this public [Google
 spreadsheet](https://docs.google.com/spreadsheets/d/1akhbqFlElr0iKnKmK0ZTQeNTBgvNgZVghEpDR9_MDvY/edit),
 and displays a calendar for each resolution you set for yourself, highlighting
 the days where you progressed (e.g. you read, you exercised), as well as the
 days where you reached your weekly goal (e.g. read more than 5 days a week, or
-exercise at least once every three days).
+exercised at least once every three days).
 
-![Screenshot](/screenshot.png?raw=true "Screenshot")
+You can see it action [here](https://iamfirecracker.github.io/resolutions).
 
 ## Credits
 
 I wanted to give React a try and was looking for something to build with it;
 inspired by [LeBenLeBen/quotes](https://github.com/LeBenLeBen/quotes) I came up
-this idea of creating an app to monitor the status of your new year
+with this idea of creating an app to monitor the status of your new year
 resolutions.
