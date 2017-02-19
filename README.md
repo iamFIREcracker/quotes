@@ -1,46 +1,19 @@
-# Quotes
+# Resolutions
 
-A simple React App which displays quotes from a Google Spreadsheet.
-It use Google oAuth to allow writing into the spreadsheet (for likes).
-Nothing secure prevent somebody to vote a gazillion times, you’ve been warned.
+A React App which helps you keep track of your new year resolutions.
 
-Spreadsheet should respect the following column order:
+It reads data from this public [Google
+spreadsheet](https://docs.google.com/spreadsheets/d/1akhbqFlElr0iKnKmK0ZTQeNTBgvNgZVghEpDR9_MDvY/edit),
+and displays a calendar for each resolution you set for yourself, highlighting
+the days where you progressed (e.g. you read, you exercised), as well as the
+days where you reached your weekly goal (e.g. read more than 5 days a week, or
+exercise at least once every three days).
 
-1. date (Have to be in a standard format, such as `yyyy-mm-dd`).
-4. text
-3. author
-4. interlocutor
-5. likes
+![Screenshot](/screenshot.png?raw=true "Screenshot")
 
-Use the first row for labels, data will load from 2nd row.
+## Credits
 
-An example can be found [here](https://docs.google.com/spreadsheets/d/1WvsatMBiRx_yXooxwmoN1CW237OTFHPesqR3QXmSL44/edit#gid=0).
-
-## Config
-
-Copy the example config file:
-
-```
-cp src/config.example.js src/config.js
-```
-
-Fill-in the fields with your own settings. You can create an app and generate a
-Client-ID on [console.developers.google.com/apis](https://console.developers.google.com/apis/).
-
-## Work
-
-```
-npm start
-```
-
-## Build
-
-```
-npm run build
-```
-
-## Deploy to Github Pages
-
-```
-npm run deploy
-```
+I wanted to give React a try and was looking for something to build with it;
+inspired by [LeBenLeBen/quotes](https://github.com/LeBenLeBen/quotes) I came up
+this idea of creating an app to monitor the status of your new year
+resolutions.
