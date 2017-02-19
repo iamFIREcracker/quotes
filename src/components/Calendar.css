@@ -91,7 +91,7 @@ td.aboveTarget + td.aboveTarget .Day div.aboveTarget:before {
 }
 
 .Calendar:nth-child(odd) .Day div span {
-  background-color: #dedede;
+  background-color: #e3e3e3;
 }
 
 .Day div.aboveTarget span, /* This is requried to use the standalone element inside the agenda */
