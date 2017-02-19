@@ -45,7 +45,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(Calendar);
     const dayWithProgress = <Day label={ 'Some progress' } progressed={ true } />;
     const dayWithAboveTarget = <Day label={ 'Yeah!' } aboveTarget={ true } />;
     const dayWithNothing = <Day label={ 'Not much...' } />;
