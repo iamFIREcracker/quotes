@@ -111,3 +111,17 @@ td.aboveTarget + td.aboveTarget .Day div.aboveTarget:before {
 .Calendar .Day div.aboveTarget span.today {
   background-color: #83dbff;
 }
+
+.Calendar .Day div.missing span::before {
+  content: '⨯';
+  display: inline-block;
+  position: relative;
+  right: 0.047em;
+  color: inherit;
+}
+.Calendar .Day div.missing span {
+  background-color: transparent;
+}
+.Calendar .Day div.missing span.today {
+  color: #70c8fb;
+}

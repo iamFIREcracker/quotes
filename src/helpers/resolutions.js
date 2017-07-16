@@ -41,20 +41,24 @@ function parseData(data) {
   return { legend, entries };
 };
 
-function getNote(legend, successPercentage) {
+function getNote(missing, legend, successPercentage) {
   let note = '';
-  const goal = legend.goal.num / legend.goal.den;
-  const done = parseFloat((successPercentage * goal / 100 * legend.goal.den).toFixed(1));
-  const period = legend.goal.den;
-  switch (done) {
-    case 0:
-      break;
-    case 1:
-      note = `1 time in the last ${period} days`;
-      break;
-    default:
-      note = `${done} times in the last ${period} days`;
-      break;
+  if (missing) {
+    note = 'status not tracked';
+  } else {
+    const goal = legend.goal.num / legend.goal.den;
+    const done = parseFloat((successPercentage * goal / 100 * legend.goal.den).toFixed(1));
+    const period = legend.goal.den;
+    switch (done) {
+      case 0:
+        break;
+      case 1:
+        note = `1 time in the last ${period} days`;
+        break;
+      default:
+        note = `${done} times in the last ${period} days`;
+        break;
+    }
   }
   return note;
 }
@@ -74,14 +78,15 @@ function getDiary(legend, entries) {
   return _.range(today.dayOfYear()).map((i) => {
     const day = today.clone().dayOfYear(i + 1); // 1-based 
     const dayLabel = day.format('D MMM');
+    const missing = !entriesByDate[dayLabel];
     mostRecent.push(!!(entriesByDate[dayLabel] && entriesByDate[dayLabel][legend.name]));
     mostRecent.shift();
 
     const progressed = _.last(mostRecent);
     const successPercentage = getSuccessPercentage(legend, mostRecent);
     const aboveTarget = successPercentage >= 100;
-    const note = getNote(legend, successPercentage);
-    return { day, note, isToday: day.isSame(today), progressed, aboveTarget };
+    const note = getNote(missing, legend, successPercentage);
+    return { day, missing, note, isToday: day.isSame(today), progressed, aboveTarget };
   });
 }
 
