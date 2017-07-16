@@ -1,6 +1,6 @@
 # Resolutions
 
-A React App which helps you keep track of your new year resolutions.
+A React App that helps you keep track of your new year resolutions.
 
 ![Screenshot](/screenshot.png?raw=true "Screenshot")
 
