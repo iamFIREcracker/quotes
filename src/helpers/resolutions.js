@@ -71,12 +71,14 @@ function getSuccessPercentage(legend, mostRecent) {
   return actual * 100 / goal;
 }
 
-function getDiary(legend, entries) {
+function getDiary(year, legend, entries) {
   const today = moment().startOf('day');
+  const sameYear = today.year() === year;
   const entriesByDate = _.keyBy(entries, '_date');
   const mostRecent = _.times(legend.goal.den, _.constant(false));
-  return _.range(today.dayOfYear()).map((i) => {
-    const day = today.clone().dayOfYear(i + 1); // 1-based 
+  const lastDay = sameYear ? today.dayOfYear() : 365; // 1-based
+  return _.range(lastDay).map((i) => {
+    const day = moment().year(year).dayOfYear(i + 1); // 1-based
     const dayLabel = day.format('D MMM');
     const missing = !entriesByDate[dayLabel];
     mostRecent.push(!!(entriesByDate[dayLabel] && entriesByDate[dayLabel][legend.name]));
@@ -90,11 +92,11 @@ function getDiary(legend, entries) {
   });
 }
 
-export function parseResolutions(data) {
+export function parseResolutions(year, data) {
   const { legend, entries } = parseData(data);
   return legend.map(legend =>({
     name: legend.name,
     target: legend.target,
-    diary: getDiary(legend, entries)
+    diary: getDiary(year, legend, entries)
   }));
 };

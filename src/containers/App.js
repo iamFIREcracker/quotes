@@ -37,7 +37,7 @@ class App extends Component {
           spreadsheetId: this.props.spreadsheetId,
           range: `Data!A1:Z`
         }).then(
-          response => this.setState({ resolutions: parseResolutions(response.result.values) }),
+          response => this.setState({ resolutions: parseResolutions(this.props.year, response.result.values) }),
           response => this.setState(response.result.error)
         );
       });
@@ -90,6 +90,7 @@ class App extends Component {
           key={ resolution.name }
           name={ resolution.name }
           target={ resolution.target }
+          year={ this.props.year }
           data={ resolution.diary }
         >
         </Calendar>
@@ -106,6 +107,7 @@ class App extends Component {
   static propTypes = {
     refreshInterval: React.PropTypes.number.isRequired,
     spreadsheetId: React.PropTypes.string.isRequired,
+    year: React.PropTypes.number.isRequired,
   };
 }
 

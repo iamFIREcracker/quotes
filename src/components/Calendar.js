@@ -62,7 +62,7 @@ export class Calendar extends React.Component {
     super(props);
     this.today = moment().startOf('day');
     this.todayLabel = this.today.format('D MMM');
-    this.firstMonday = moment().startOf('year').startOf('isoweek');
+    this.firstMonday = moment().year(props.year).startOf('year').startOf('isoweek');
   }
 
   render() {
@@ -122,7 +122,7 @@ export class Calendar extends React.Component {
     return _.concat(
       this.props.data,
       _.times(tillEndOfYear, i => ({
-        day: moment().dayOfYear(this.props.data.length + i + 1) // dayOfYear accepts 1 - 366
+        day: moment().year(this.props.year).dayOfYear(this.props.data.length + i + 1) // dayOfYear accepts 1 - 366
       })),
       _.times(additionalDaysToAlign, _.constant(undefined))
     );
@@ -142,6 +142,7 @@ export class Calendar extends React.Component {
   static propTypes = {
     name: React.PropTypes.string.isRequired,
     target: React.PropTypes.string.isRequired,
+    year: React.PropTypes.number.isRequired,
     data: React.PropTypes.array.isRequired,
   };
 };
