@@ -5,7 +5,7 @@ A React App that helps you keep track of your new year resolutions.
 ![Screenshot](/screenshot.png?raw=true "Screenshot")
 
 It reads data from this public [Google
-spreadsheet](https://docs.google.com/spreadsheets/d/1akhbqFlElr0iKnKmK0ZTQeNTBgvNgZVghEpDR9_MDvY/edit),
+spreadsheet](https://docs.google.com/spreadsheets/d/1S0exiagavqEs-mXAuZr1o_OshtWKZfVERyWRjEepsY0/edit),
 and displays a calendar for each resolution you set for yourself, highlighting
 the days where you progressed (e.g. you read, you exercised), as well as the
 days where you reached your weekly goal (e.g. read more than 5 days a week, or

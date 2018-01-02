@@ -5,7 +5,7 @@ import './index.css';
 
 let spreadsheetId = window.location.hash.substring(1);
 if (!spreadsheetId) {
-  spreadsheetId = '1akhbqFlElr0iKnKmK0ZTQeNTBgvNgZVghEpDR9_MDvY';
+  spreadsheetId = '1S0exiagavqEs-mXAuZr1o_OshtWKZfVERyWRjEepsY0';
   window.location.replace(`./#${spreadsheetId}`);
 }
 
