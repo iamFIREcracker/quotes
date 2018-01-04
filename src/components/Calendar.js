@@ -34,6 +34,9 @@ export class Day extends React.Component {
     if (this.props.missing) {
       classes.push('missing');
     }
+    if (this.props.suspended) {
+      classes.push('suspended');
+    }
     return classes.join(' ');
   }
 
@@ -51,6 +54,7 @@ export class Day extends React.Component {
   static propTypes = {
     label: React.PropTypes.string.isRequired,
     missing: React.PropTypes.bool,
+    suspended: React.PropTypes.bool,
     isToday: React.PropTypes.bool,
     progressed: React.PropTypes.bool,
     aboveTarget: React.PropTypes.bool,

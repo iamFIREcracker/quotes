@@ -30,8 +30,10 @@ function parseData(data) {
       let done = {};
       let i = 1;
       while (i < row.length) {
-        if (row[i]) {
-          done[legend[i - 1].name] = true
+        if (/[xX]/.test(row[i])) {
+          done[legend[i - 1].name] = true;
+        } else if (/[sS]/.test(row[i])) {
+          done[legend[i - 1].name] = -1;
         }
         i++;
       }
@@ -41,10 +43,12 @@ function parseData(data) {
   return { legend, entries };
 };
 
-function getNote(missing, legend, successPercentage) {
+function getNote(missing, suspended, legend, successPercentage) {
   let note = '';
   if (missing) {
     note = 'status not tracked';
+  } else if (suspended) {
+    note = 'tracking suspended';
   } else {
     const goal = legend.goal.num / legend.goal.den;
     const done = parseFloat((successPercentage * goal / 100 * legend.goal.den).toFixed(1));
@@ -81,14 +85,20 @@ function getDiary(year, legend, entries) {
     const day = moment().year(year).dayOfYear(i + 1); // 1-based
     const dayLabel = day.format('D MMM');
     const missing = !entriesByDate[dayLabel];
-    mostRecent.push(!!(entriesByDate[dayLabel] && entriesByDate[dayLabel][legend.name]));
+    let suspended = false;
+    let data = false;
+    if (entriesByDate[dayLabel] && entriesByDate[dayLabel][legend.name]) {
+      suspended = entriesByDate[dayLabel][legend.name] === -1;
+      data = !suspended && !!(entriesByDate[dayLabel][legend.name]);
+    }
+    mostRecent.push(data);
     mostRecent.shift();
 
     const progressed = _.last(mostRecent);
     const successPercentage = getSuccessPercentage(legend, mostRecent);
     const aboveTarget = successPercentage >= 100;
-    const note = getNote(missing, legend, successPercentage);
-    return { day, missing, note, isToday: day.isSame(today), progressed, aboveTarget };
+    const note = getNote(missing, suspended, legend, successPercentage);
+    return { day, missing, suspended, note, isToday: day.isSame(today), progressed, aboveTarget };
   });
 }
 

@@ -112,16 +112,25 @@ td.aboveTarget + td.aboveTarget .Day div.aboveTarget:before {
   background-color: #83dbff;
 }
 
-.Calendar .Day div.missing span::before {
-  content: '⨯';
+.Calendar .Day div span::before {
+  font-size: .375em;
+  font-weight: bold;
   display: inline-block;
   position: relative;
-  right: 0.047em;
+  line-height: .375em;
   color: inherit;
 }
+.Calendar .Day div.suspended span::before {
+  content: '!';
+}
+.Calendar .Day div.missing span::before {
+  content: '?';
+}
+.Calendar .Day div.suspended span,
 .Calendar .Day div.missing span {
   background-color: transparent;
 }
+.Calendar .Day div.suspended span.today,
 .Calendar .Day div.missing span.today {
   color: #70c8fb;
 }
